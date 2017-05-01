@@ -235,7 +235,7 @@ webpackJsonp([2,0],[
 	      this.progress = 0;
 	      this.searchParams.page = 1;
 	      this.paginationCur = 1;
-	      this.$http.post('https://www.lakes.com.au/wp-json/gwmp/v1/members', { lat: this.mypos.lat, long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
+	      this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', { lat: this.mypos.lat, long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
 	        if (Array.isArray(response.data)) {
 	          this.fullmembers = response.data;
 	          this.members = response.data;
@@ -696,7 +696,7 @@ webpackJsonp([2,0],[
 	      }],
 	      staticClass: "col-md-6 col-sm-12"
 	    }, [_c('div', {
-	      staticClass: "panel panel-info mem-panel",
+	      staticClass: "hover panel panel-info mem-panel",
 	      class: {
 	        selected: m.isSelected
 	      }
@@ -708,25 +708,31 @@ webpackJsonp([2,0],[
 	    }), _vm._v(" "), _c('div', {
 	      staticClass: "panel-body",
 	      staticStyle: {
-	        "height": "100px",
+	        "height": "120px",
 	        "overflow": "hidden",
 	        "margin-bottom": "30px"
+	      }
+	    }, [_c('h3', {
+	      staticClass: "v-title",
+	      staticStyle: {
+	        "margin": "0px"
 	      }
 	    }, [_c('a', {
 	      attrs: {
 	        "href": m.url
 	      }
-	    }, [_vm._v(" " + _vm._s(m.name))]), _vm._v(" "), _c('p', {
-	      domProps: {
-	        "innerHTML": _vm._s(m.desc)
-	      }
-	    }), _vm._v(" "), _c('a', {
+	    }, [_vm._v(" " + _vm._s(m.name))])]), _vm._v(" "), _c('p', {
 	      directives: [{
 	        name: "show",
 	        rawName: "v-show",
-	        value: (m.desc && m.desc.length > 50),
-	        expression: "m.desc && m.desc.length > 50"
+	        value: (m.desc != false),
+	        expression: "m.desc != false"
 	      }],
+	      domProps: {
+	        "innerHTML": _vm._s(m.desc)
+	      }
+	    }), _vm._v(" "), _c('button', {
+	      staticClass: "btn btn-success btn-view",
 	      staticStyle: {
 	        "position": "absolute",
 	        "bottom": "25px",

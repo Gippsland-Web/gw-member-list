@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.1
+Version: 1.2.1
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
@@ -16,7 +16,7 @@ function gwmp_register_styles() {
 	wp_register_script('vue-m',plugins_url('/js/manifest.js',__FILE__),array(),"1.0.0",true);
 	wp_register_script('vue-v',plugins_url('/js/vendor.js',__FILE__),array(),"1.0.0",true);
 
-	wp_register_script('vue',plugins_url('/js/app.js',__FILE__),array(),"1.0.0",true);
+	wp_register_script('gw-vue',plugins_url('/js/app.js',__FILE__),array(),"1.0.0",true);
 
 }
 add_action( 'wp_enqueue_scripts', 'gwmp_register_styles' );
@@ -26,9 +26,10 @@ function gwmp_full_page_shortcode() {
 	wp_enqueue_style('vue-members');
 	wp_enqueue_script('vue-m');
 	wp_enqueue_script('vue-v');
+    wp_localize_script("gw-vue","gwVue",array('Url' => site_url(), "nonce" => wp_create_nonce('gw-vue-search')));
 
-	wp_enqueue_script('vue');
-	wp_enqueue_script('vue-members-script');
+
+	wp_enqueue_script('gw-vue');
 	wp_dequeue_script('google-maps');
 	return '<div id="app"></div>';
 }
@@ -138,13 +139,14 @@ function gwmp_get_members($request) {
 		$mem->type = bp_get_member_type($displayed_user);
 		
 		if($mem->type =="host")
-			$mem->desc = bp_get_profile_field_data(['field'=> 'Property Description', 'user_id' => $displayed_user]);
+			$mem->desc = bp_get_profile_field_data(['field'=> 'Short Property Description', 'user_id' => $displayed_user]);
 		else
-			$mem->desc = bp_get_profile_field_data(['field'=> 'About Me', 'user_id' => $displayed_user]);
+			$mem->desc = bp_get_profile_field_data(['field'=> 'Why I joined WWOOF', 'user_id' => $displayed_user]);
 		if(bp_get_profile_field_data(['field'=> 'Property Name', 'user_id' => $displayed_user]) != false)
 			$mem->name = bp_get_profile_field_data(['field'=> 'Property Name', 'user_id' => $displayed_user]);
 		else
 			$mem->name = bp_get_member_name();// bp_get_profile_field_data("field='Property Name'")
+
 
 		if(strlen($mem->desc) > 100)
 			$mem->desc = substr($mem->desc,0,100);
@@ -158,7 +160,8 @@ function gwmp_get_members($request) {
           'item_id' => $displayed_user,
         ));
 		
-		
+
+			
 
         //get the information of the user from database
 		global $wpdb;

@@ -65,18 +65,20 @@
                     </div>
                 </div>
                 <div v-if="!mapOnly" class="col-md-6 col-sm-12" v-for="(m, index) in membersFiltered" v-show="progress == 100">
-                    <div class="panel panel-info mem-panel" v-bind:class="{selected: m.isSelected}">
+                    
+					<div class="hover panel panel-info mem-panel" v-bind:class="{selected: m.isSelected}">
                         <div class="panel-heading mem-profile-panel" v-bind:style="{ backgroundImage: 'url(' + m.cover + ')' }">
                         </div>
-                        <div class="panel-body" style="height:100px;overflow:hidden;margin-bottom:30px">
-                            <a v-bind:href="m.url"> {{m.name}}</a>
-                            <p v-html="m.desc"></p>
-                            <a v-show="m.desc && m.desc.length > 50" v-bind:href="m.url" style="position: absolute;bottom: 25px;right: 42%;">-View-</a>
+                        <div class="panel-body" style="height:120px;overflow:hidden;margin-bottom:30px">
+							<h3 class="v-title" style="margin:0px;"><a v-bind:href="m.url"> {{m.name}}</a></h3>
+                            <p v-show="m.desc != false" v-html="m.desc"></p>
+                            <button v-bind:href="m.url" class="btn btn-success btn-view" style="position: absolute;bottom: 25px;right: 42%;">-View-</button>
                             <div class="active" v-bind:style="{width: m.result +'%'}">
                                 <span v-for="n in m.count" class="fa star"></span>
                             </div>
                         </div>
-                    </div>
+					</div>
+
                 </div>
                 <div class="col-sm-12 form-group">
                     <button style="float:left;" v-show="paginationCur > 1" v-on:click="paginationCur -= 1;">Previous Page</button>
@@ -309,7 +311,7 @@ if(this.selectedID != -1) {
         this.progress = 0;
         this.searchParams.page = 1;
 				this.paginationCur = 1;
-        this.$http.post('https://www.lakes.com.au/wp-json/gwmp/v1/members', { lat: this.mypos.lat,long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
+        this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', { lat: this.mypos.lat,long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
           //console.log(response);
           // this.data.members = response.data;
           if (Array.isArray(response.data)) {
@@ -364,6 +366,9 @@ if(this.selectedID != -1) {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.hover:hover {
+background-color:#bce8f1;
+}
 .selected {
 	border: 3px solid red;
 }
@@ -381,8 +386,8 @@ li {
   margin: 0 10px;
 }
 
-a {
-  color: #42b983;
+h3 {
+	color:#5cb85c;	
 }
 .cssload-wrap {
 	text-align: center;
