@@ -430,12 +430,6 @@ webpackJsonp([2,0],[
 	  }, [_c('link', {
 	    attrs: {
 	      "rel": "stylesheet",
-	      "href": "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css",
-	      "crossorigin": "anonymous"
-	    }
-	  }), _vm._v(" "), _c('link', {
-	    attrs: {
-	      "rel": "stylesheet",
 	      "href": "https://unpkg.com/leaflet@1.0.2/dist/leaflet.css"
 	    }
 	  }), _vm._v(" "), _c('div', {

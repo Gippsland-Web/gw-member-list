@@ -1,6 +1,6 @@
 <template>
 <div class="membersloop">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <div class="r" style="height:100%">
         
@@ -389,7 +389,13 @@ li {
 h3 {
 	color:#D32F2F;
 	font-size:16px;	
+	font-weight: 700;
 }
+a:hover {
+	text-decoration: none;
+	color:#D32F2F;
+}
+
 .cssload-wrap {
 	text-align: center;
 	line-height: 195px;

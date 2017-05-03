@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.2.3
+Version: 1.2.4
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
