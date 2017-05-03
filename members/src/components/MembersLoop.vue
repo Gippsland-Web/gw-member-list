@@ -70,9 +70,9 @@
                         <div class="panel-heading mem-profile-panel" v-bind:style="{ backgroundImage: 'url(' + m.cover + ')' }">
                         </div>
                         <div class="panel-body" style="height:120px;overflow:hidden;margin-bottom:30px">
-							<h3 class="v-title" style="margin:0px;"><a v-bind:href="m.url"> {{m.name}}</a></h3>
+							<a v-bind:href="m.url"> <h3 class="v-title" style="margin:0px;">{{m.name}}</h3></a>
                             <p v-show="m.desc != false" v-html="m.desc"></p>
-                            <button v-bind:href="m.url" class="btn btn-success btn-view" style="position: absolute;bottom: 25px;right: 42%;">-View-</button>
+                            <button v-bind:href="m.url" class="btn btn-success btn-view" style="position: absolute;bottom: 25px;right: 42%;">View</button>
                             <div class="active" v-bind:style="{width: m.result +'%'}">
                                 <span v-for="n in m.count" class="fa star"></span>
                             </div>
@@ -387,7 +387,8 @@ li {
 }
 
 h3 {
-	color:#5cb85c;	
+	color:#D32F2F;
+	font-size:16px;	
 }
 .cssload-wrap {
 	text-align: center;

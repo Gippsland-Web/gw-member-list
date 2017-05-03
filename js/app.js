@@ -712,16 +712,16 @@ webpackJsonp([2,0],[
 	        "overflow": "hidden",
 	        "margin-bottom": "30px"
 	      }
+	    }, [_c('a', {
+	      attrs: {
+	        "href": m.url
+	      }
 	    }, [_c('h3', {
 	      staticClass: "v-title",
 	      staticStyle: {
 	        "margin": "0px"
 	      }
-	    }, [_c('a', {
-	      attrs: {
-	        "href": m.url
-	      }
-	    }, [_vm._v(" " + _vm._s(m.name))])]), _vm._v(" "), _c('p', {
+	    }, [_vm._v(_vm._s(m.name))])]), _vm._v(" "), _c('p', {
 	      directives: [{
 	        name: "show",
 	        rawName: "v-show",
@@ -741,7 +741,7 @@ webpackJsonp([2,0],[
 	      attrs: {
 	        "href": m.url
 	      }
-	    }, [_vm._v("-View-")]), _vm._v(" "), _c('div', {
+	    }, [_vm._v("View")]), _vm._v(" "), _c('div', {
 	      staticClass: "active",
 	      style: ({
 	        width: m.result + '%'

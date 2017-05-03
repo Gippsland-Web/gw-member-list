@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.2.2
+Version: 1.2.3
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
@@ -148,8 +148,8 @@ function gwmp_get_members($request) {
 			$mem->name = bp_get_member_name();// bp_get_profile_field_data("field='Property Name'")
 
 
-		if(strlen($mem->desc) > 100)
-			$mem->desc = substr($mem->desc,0,100);
+		if(strlen($mem->desc) > 140)
+			$mem->desc = substr($mem->desc,0,140);
 		//$mem->farmmethod = bp_get_profile_field_data(['field'=> 'Farming methods', 'user_id' => $displayed_user]);
 		//$mem->skillsreq = bp_get_profile_field_data(['field'=> 'Skills required', 'user_id' => $displayed_user]);
 		//$mem->acomtype = bp_get_profile_field_data(['field'=> 'Accommodation', 'user_id' => $displayed_user]);
