@@ -344,10 +344,14 @@ if(this.selectedID != -1) {
           var loc = locMember.position;
 
           var pos = { lat: Number(loc.lat), lng: Number(loc.lng) };
-
-					var content = "<h3>" +locMember.name +"</h3><p>" + locMember.desc + "...</p><a href='" + locMember.url + "'>View</a>";
-					if(locMember.cover != false)
-						content = "<img src='" + locMember.cover + "'</img>" + content;
+		  			var content = "<a href='" +locMember.url + "'>";
+					  if(locMember.cover != false)
+						content += "<img src='" + locMember.cover + "'</img>";
+					  content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;		text-transform: uppercase;	font-weight: 700;'>" +locMember.name +"</h3>";
+					  if(locMember.desc != false)
+					  	content += "<p>" + locMember.desc + "...</p>";
+					  content += "</a>";
+					
           this.markers.push({
             position: pos,
 						title: content,
