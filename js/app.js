@@ -443,7 +443,183 @@ webpackJsonp([2,0],[
 	      'col-md-6': !_vm.mapOnly, 'col-md-12': _vm.mapOnly
 	    }
 	  }, [_c('div', {
-	    staticClass: "holder",
+	    staticClass: "holder hidden-md hidden-lg",
+	    staticStyle: {
+	      "position": "relative",
+	      "top": "0",
+	      "bottom": "0",
+	      "overflow-y": "hidden",
+	      "height": "25vh"
+	    }
+	  }, [_c('div', {
+	    staticClass: "panel panel-noblueforyou"
+	  }, [_c('div', {
+	    staticClass: "panel-heading"
+	  }, [_c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('label', {
+	    attrs: {
+	      "for": "q"
+	    }
+	  }, [_vm._v("Search")]), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.textQuery),
+	      expression: "searchParams.textQuery"
+	    }],
+	    attrs: {
+	      "id": "q"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.searchParams.textQuery)
+	    },
+	    on: {
+	      "change": _vm.filterMembers,
+	      "keyup": function($event) {
+	        _vm.searchParams.textQuery = $event.target.value;
+	        _vm.filterMembers();
+	      },
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.searchParams.textQuery = $event.target.value
+	      }
+	    }
+	  }), _vm._v(" "), _c('div', {
+	    staticClass: "form-group"
+	  }, [_c('br'), _vm._v(" "), _c('label', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (!_vm.showNearBy),
+	      expression: "!showNearBy"
+	    }]
+	  }, [_vm._v("Please allow your browser to access your location for nearby search.")]), _vm._v(" "), _c('label', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showNearBy),
+	      expression: "showNearBy"
+	    }]
+	  }, [_vm._v("Near By Me")]), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showNearBy),
+	      expression: "showNearBy"
+	    }, {
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.nearMe),
+	      expression: "searchParams.nearMe"
+	    }],
+	    attrs: {
+	      "type": "checkbox"
+	    },
+	    domProps: {
+	      "checked": Array.isArray(_vm.searchParams.nearMe) ? _vm._i(_vm.searchParams.nearMe, null) > -1 : _vm._q(_vm.searchParams.nearMe, true)
+	    },
+	    on: {
+	      "change": [function($event) {
+	        var $$a = _vm.searchParams.nearMe,
+	          $$el = $event.target,
+	          $$c = $$el.checked ? (true) : (false);
+	        if (Array.isArray($$a)) {
+	          var $$v = null,
+	            $$i = _vm._i($$a, $$v);
+	          if ($$c) {
+	            $$i < 0 && (_vm.searchParams.nearMe = $$a.concat($$v))
+	          } else {
+	            $$i > -1 && (_vm.searchParams.nearMe = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+	          }
+	        } else {
+	          _vm.searchParams.nearMe = $$c
+	        }
+	      }, _vm.filterMembers]
+	    }
+	  }), _vm._v(" "), _c('select', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.searchParams.nearMe),
+	      expression: "searchParams.nearMe"
+	    }, {
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.distance),
+	      expression: "searchParams.distance"
+	    }],
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.distance = Array.prototype.filter.call($event.target.options, function(o) {
+	          return o.selected
+	        }).map(function(o) {
+	          var val = "_value" in o ? o._value : o.value;
+	          return val
+	        })[0]
+	      }, _vm.filterMembers]
+	    }
+	  }, [_c('option', {
+	    attrs: {
+	      "value": "50"
+	    }
+	  }, [_vm._v("50km")]), _vm._v(" "), _c('option', {
+	    attrs: {
+	      "value": "100"
+	    }
+	  }, [_vm._v("100km")]), _vm._v(" "), _c('option', {
+	    attrs: {
+	      "value": "250"
+	    }
+	  }, [_vm._v("250km")]), _vm._v(" "), _c('option', {
+	    attrs: {
+	      "value": "500"
+	    }
+	  }, [_vm._v("500km")])])])])])]), _vm._v(" "), (_vm.mapOnly) ? _c('div', {
+	    staticClass: "col-md-12",
+	    staticStyle: {
+	      "height": "55vh"
+	    }
+	  }, [_c('v-map', {
+	    attrs: {
+	      "center": _vm.center,
+	      "zoom": _vm.zoom
+	    },
+	    on: {
+	      "l-moveend": _vm.filterByMapVis
+	    }
+	  }, [_c('v-tilelayer', {
+	    attrs: {
+	      "url": "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+	      "attribution": "OpenStreetMap"
+	    }
+	  }), _vm._v(" "), _c('v-cluster', _vm._l((_vm.markers), function(m, index) {
+	    return _c('v-marker', {
+	      attrs: {
+	        "lat-lng": m.position
+	      },
+	      on: {
+	        "l-click": function($event) {
+	          _vm.markerClick(index)
+	        }
+	      }
+	    }, [_c('v-popup', {
+	      attrs: {
+	        "content": m.title
+	      }
+	    })])
+	  })), _vm._v(" "), _c('v-circlemarker', {
+	    attrs: {
+	      "radius": _vm.radius,
+	      "visible": _vm.searchParams.nearMe,
+	      "lat-lng": _vm.mypos,
+	      "draggable": true
+	    },
+	    on: {
+	      "l-dragend": _vm.setPosition
+	    }
+	  })]), _vm._v(" ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+	    staticClass: "holder hidden-xs hidden-sm",
 	    staticStyle: {
 	      "position": "relative",
 	      "top": "0",
@@ -452,12 +628,10 @@ webpackJsonp([2,0],[
 	      "height": "85vh"
 	    }
 	  }, [_c('div', {
-	    staticClass: "panel panel-info"
+	    staticClass: "panel panel-noblueforyou"
 	  }, [_c('div', {
 	    staticClass: "panel-heading"
 	  }, [_c('div', {
-	    staticClass: "form-group"
-	  }), _vm._v(" "), _c('div', {
 	    staticClass: "form-group form-inline"
 	  }, [_c('label', {
 	    attrs: {
@@ -688,7 +862,7 @@ webpackJsonp([2,0],[
 	        value: (_vm.progress == 100),
 	        expression: "progress == 100"
 	      }],
-	      staticClass: "col-md-6 col-sm-12"
+	      staticClass: "col-md-6 col-sm-12 hidden-sm hidden-xs"
 	    }, [_c('div', {
 	      staticClass: "hover panel panel-info mem-panel",
 	      class: {

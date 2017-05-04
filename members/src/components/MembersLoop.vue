@@ -5,13 +5,67 @@
     <div class="r" style="height:100%">
         
         <div v-bind:class="{ 'col-md-6' : !mapOnly, 'col-md-12': mapOnly } " class=" " >
-            <div class="holder" style="position:relative;top:0;bottom:0;overflow-y:auto;height:85vh;">
-                <div class="panel panel-info">
+
+            <div class="holder hidden-md hidden-lg" style="position:relative;top:0;bottom:0;overflow-y:hidden;height:25vh;">
+                <div class="panel panel-noblueforyou">
                     <div class="panel-heading">
-                        <div class="form-group"></div>
+                        
                         <div class="form-group form-inline">
                             <label for="q">Search</label> <input id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
-                            <label>Member Type</label>
+                            
+							                          
+                            
+					<div class="form-group">
+					<br>
+					<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
+						<label v-show="showNearBy">Near By Me</label>
+						<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
+						<select v-show="searchParams.nearMe" v-model="searchParams.distance" v-on:change="filterMembers">
+							<option value=50>50km</option>
+							<option value=100>100km</option>
+							<option value=250>250km</option>
+							<option value=500>500km</option>
+						</select>
+					</div>
+							</div>
+                        
+                    </div>
+                </div>
+
+
+ <div v-if="mapOnly" class="col-md-12" style="height:55vh;">
+            <v-map :center="center" :zoom="zoom" v-on:l-moveend="filterByMapVis">
+                <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution="OpenStreetMap"></v-tilelayer>
+                <v-cluster>
+                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" @l-click="markerClick(index)">
+                        <v-popup :content="m.title"> </v-popup>
+                    </v-marker>
+                </v-cluster>
+								<v-circlemarker :radius="radius" :visible="searchParams.nearMe" :lat-lng="mypos" :draggable="true" @l-dragend="setPosition"> </v-circlemarker>
+            </v-map>
+            <!-- <gmap-map :center="center" :zoom="7" @bounds_changed="filterByMapVis($event)">
+                <gmap-cluster>
+                <gmap-marker v-for="m in markers" :position="m.position" :clickable="true" @click="m.ifw= !m.ifw">
+                <gmap-info-window :opened="m.ifw" :content="m.ifw2text"></gmap-info-window>
+                </gmap-marker>
+                </gmap-cluster>
+                </gmap-map> -->
+  </div>
+            </div>
+
+
+
+
+
+
+            <div class="holder hidden-xs hidden-sm" style="position:relative;top:0;bottom:0;overflow-y:auto;height:85vh;">
+                <div class="panel panel-noblueforyou">
+                    <div class="panel-heading">
+                        
+                        <div class="form-group form-inline">
+                            <label for="q">Search</label> <input id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
+                            
+							<label>Member Type</label>
                             <select v-model="searchParams.memberType" v-on:change="filterMembers">
                                 <option value="host">Host</option>
                                 <option value="wwoofer">WWOOFER</option>
@@ -44,7 +98,8 @@
 														</div>
                             <p>Found: {{totalCnt}} Filtered by Map: {{resultCnt}} </p>
 														<button @click="mapOnly = !mapOnly">Toggle List</button>
-                        </div>
+							</div>
+                        
                     </div>
                 </div>
                 <!--member loop -->
@@ -64,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!mapOnly" class="col-md-6 col-sm-12" v-for="(m, index) in membersFiltered" v-show="progress == 100">
+                <div v-if="!mapOnly" class="col-md-6 col-sm-12 hidden-sm hidden-xs" v-for="(m, index) in membersFiltered" v-show="progress == 100">
                     
 					<div class="hover panel panel-info mem-panel" v-bind:class="{selected: m.isSelected}">
                         <div class="panel-heading mem-profile-panel" v-bind:style="{ backgroundImage: 'url(' + m.cover + ')' }">
@@ -388,7 +443,8 @@ li {
 
 h3 {
 	color:#D32F2F;
-	font-size:16px;	
+	font-size:15px;	
+	text-transform: uppercase;
 	font-weight: 700;
 }
 a:hover {

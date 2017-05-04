@@ -54,7 +54,8 @@ li[data-v-c80fc302] {
 }
 h3[data-v-c80fc302] {
 	color:#D32F2F;
-	font-size:16px;	
+	font-size:15px;	
+	text-transform: uppercase;
 	font-weight: 700;
 }
 a[data-v-c80fc302]:hover {
