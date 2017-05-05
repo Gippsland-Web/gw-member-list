@@ -81,7 +81,7 @@
                                 <label>Skills Required</label><br>
                                 <div class="form-group" v-for="s in SkillTypes">
                                     <input type="checkbox" :id="s" :value="s" v-model="searchParams.skillsReq" v-on:change="filterMembers">
-                                    <label :for="s">{{s}} &nbsp</label>
+                                    <label style="font-weight:400;" :for="s">{{s}} &nbsp</label>
                                 </div>
                             </div>
 														<div class="form-group">
@@ -347,7 +347,7 @@ if(this.selectedID != -1) {
 		  			var content = "<a href='" +locMember.url + "'>";
 					  if(locMember.cover != false)
 						content += "<img src='" + locMember.cover + "'</img>";
-					  content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;		text-transform: uppercase;	font-weight: 700;'>" +locMember.name +"</h3>";
+					  content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;	text-align:center;	text-transform: uppercase;	font-weight: 700;'>" +locMember.name +"</h3>";
 					  if(locMember.desc != false)
 					  	content += "<p>" + locMember.desc + "...</p>";
 					  content += "</a>";
@@ -426,7 +426,7 @@ if(this.selectedID != -1) {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .hover:hover {
-background-color:#bce8f1;
+background-color:rgb(239,239,239);
 }
 .selected {
 	border: 3px solid red;

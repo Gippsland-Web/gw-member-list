@@ -218,7 +218,7 @@ webpackJsonp([2,0],[
 	        var pos = { lat: Number(loc.lat), lng: Number(loc.lng) };
 	        var content = "<a href='" + locMember.url + "'>";
 	        if (locMember.cover != false) content += "<img src='" + locMember.cover + "'</img>";
-	        content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;		text-transform: uppercase;	font-weight: 700;'>" + locMember.name + "</h3>";
+	        content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;	text-align:center;	text-transform: uppercase;	font-weight: 700;'>" + locMember.name + "</h3>";
 	        if (locMember.desc != false) content += "<p>" + locMember.desc + "...</p>";
 	        content += "</a>";
 
@@ -749,6 +749,9 @@ webpackJsonp([2,0],[
 	        }, _vm.filterMembers]
 	      }
 	    }), _vm._v(" "), _c('label', {
+	      staticStyle: {
+	        "font-weight": "400"
+	      },
 	      attrs: {
 	        "for": s
 	      }

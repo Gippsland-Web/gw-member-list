@@ -36,7 +36,7 @@ gmap-map {
 
 
 .hover[data-v-c80fc302]:hover {
-background-color:#bce8f1;
+background-color:rgb(239,239,239);
 }
 .selected[data-v-c80fc302] {
 	border: 3px solid red;
