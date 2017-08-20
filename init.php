@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.2.7
+Version: 1.2.9
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
@@ -35,6 +35,10 @@ function gwmp_full_page_shortcode() {
 }
 add_shortcode("gw-member-search",'gwmp_full_page_shortcode');
 
+
+function gwmp_include() {
+
+}
 
 //Register some rest routes for vue to use
 function gwmp_get_members($request) {
@@ -93,7 +97,7 @@ function gwmp_get_members($request) {
 					$includes = $res;
 				}
 	}
-		if(count($request["skillsreq"]) > 0){
+	if(count($request["skillsreq"]) > 0){
 			if($includes == NULL)
 				$includes = my_custom_ids("Skills required",$request['skillsreq']);	
 				else {
@@ -105,6 +109,33 @@ function gwmp_get_members($request) {
 					$includes = $res;
 				}
 	}
+	if(count($request["diet"]) > 0){
+			if($includes == NULL)
+				$includes = my_custom_ids("Cater for",$request['diet']);	
+				else {
+					$res = array();
+					foreach(my_custom_ids("Cater for",$request['diet']) as $kv) {
+						if(in_array($kv,$includes))
+							array_push($res,$kv);
+					}
+					$includes = $res;
+				}
+	}
+	if(count($request["staylength"]) > 0){
+			if($includes == NULL)
+				$includes = my_custom_ids("Preferred length of Stay",$request['staylength']);	
+				else {
+					$res = array();
+					foreach(my_custom_ids("Preferred length of Stay",$request['staylength']) as $kv) {
+						if(in_array($kv,$includes))
+							array_push($res,$kv);
+					}
+					$includes = $res;
+				}
+	}
+
+
+
 	if(count($includes) > 0) {
 		$query = 'include=' . implode(",", $includes);
 	}
@@ -115,7 +146,7 @@ function gwmp_get_members($request) {
 	
 
 	$members = array();
-	$q = "per_page=3001&page={$request['page']}&member_type={$request['type']}&{$query}";
+	$q = "per_page=3000&page={$request['page']}&member_type={$request['type']}&{$query}";
 
 	$hash = md5($q);
 	$res = get_transient('gw_m'.$hash);
@@ -256,6 +287,6 @@ function my_custom_ids( $field_name, $field_value = '' ) {
 		return $custom_ids_str;
 	}
 	else
-		return '';
+		return [0];
 
 }

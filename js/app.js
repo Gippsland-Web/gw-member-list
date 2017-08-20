@@ -129,7 +129,7 @@ webpackJsonp([2,0],[
 	  data: function data() {
 	    return {
 	      members: [],
-	      searchParams: { textQuery: "", memberType: "host", farmMethod: "Any", skillsReq: [], page: 1, nearMe: false, distance: 50 },
+	      searchParams: { state: "", staylength: [], diet: [], textQuery: "", memberType: "host", farmMethod: "Any", skillsReq: [], page: 1, nearMe: false, distance: 50 },
 	      center: { lat: -38, lng: 144 },
 	      markers: [],
 	      fullmembers: [],
@@ -139,7 +139,9 @@ webpackJsonp([2,0],[
 	      mypos: { lat: -1, lng: -1 },
 	      SkillTypes: ["General Gardening", "Weeding", "Pruning", "Animal Care", "Building", "Fencing", "Dairy", "Bee Keeping", "Engineering", "Mechanical"],
 	      selectedID: -1,
-
+	      UserTypes: ["Host", "WWOOFer"],
+	      Diets: ["All diets catered for", "Fish", "Meat", "Vegetarian", "Vegetarian Only", "Vegan"],
+	      LengthOfStay: ["1-2 days", "3-7 days", "1-2 weeks", "2-4 weeks", "Whatever suits"],
 	      mapOnly: false,
 	      listOnly: false,
 	      radius: 10,
@@ -238,7 +240,20 @@ webpackJsonp([2,0],[
 	      this.progress = 0;
 	      this.searchParams.page = 1;
 	      this.paginationCur = 1;
-	      this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', { lat: this.mypos.lat, long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
+	      this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', {
+	        lat: this.mypos.lat,
+	        long: this.mypos.lng,
+	        nearme: this.searchParams.nearMe,
+	        distance: this.searchParams.distance,
+	        page: this.searchParams.page,
+	        type: this.searchParams.memberType,
+	        q: this.searchParams.textQuery,
+	        farmmethod: this.searchParams.farmMethod,
+	        skillsreq: this.searchParams.skillsReq,
+	        diet: this.searchParams.diet,
+	        state: this.searchParams.state,
+	        staylength: this.searchParams.staylength
+	      }).then(function (response) {
 	        if (Array.isArray(response.data)) {
 	          this.fullmembers = response.data;
 	          this.members = response.data;
@@ -621,7 +636,7 @@ webpackJsonp([2,0],[
 	    on: {
 	      "l-dragend": _vm.setPosition
 	    }
-	  })]), _vm._v(" ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+	  })])]) : _vm._e()]), _vm._v(" "), _vm._v(" "), _c('div', {
 	    staticClass: "holder hidden-xs hidden-sm",
 	    staticStyle: {
 	      "position": "relative",
@@ -633,14 +648,60 @@ webpackJsonp([2,0],[
 	  }, [_c('div', {
 	    staticClass: "panel panel-noblueforyou"
 	  }, [_c('div', {
-	    staticClass: "panel-heading"
+	    staticClass: "panel-body"
 	  }, [_c('div', {
 	    staticClass: "form-group form-inline"
-	  }, [_c('label', {
+	  }, [_c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.memberType),
+	      expression: "searchParams.memberType"
+	    }],
 	    attrs: {
-	      "for": "q"
+	      "id": "host",
+	      "value": "host",
+	      "type": "radio"
+	    },
+	    domProps: {
+	      "checked": _vm._q(_vm.searchParams.memberType, "host")
+	    },
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.memberType = "host"
+	      }, _vm.filterMembers]
 	    }
-	  }, [_vm._v("Search")]), _vm._v(" "), _c('input', {
+	  }), _vm._v(" "), _c('label', {
+	    attrs: {
+	      "for": "host"
+	    }
+	  }, [_vm._v("Host")]), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.memberType),
+	      expression: "searchParams.memberType"
+	    }],
+	    attrs: {
+	      "id": "wwoofer",
+	      "value": "wwoofer",
+	      "type": "radio"
+	    },
+	    domProps: {
+	      "checked": _vm._q(_vm.searchParams.memberType, "wwoofer")
+	    },
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.memberType = "wwoofer"
+	      }, _vm.filterMembers]
+	    }
+	  }), _vm._v(" "), _c('label', {
+	    attrs: {
+	      "for": "wwoofer"
+	    }
+	  }, [_vm._v("WWOOFer")])]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('input', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -648,6 +709,8 @@ webpackJsonp([2,0],[
 	      expression: "searchParams.textQuery"
 	    }],
 	    attrs: {
+	      "type": "search",
+	      "placeholder": "General Search",
 	      "id": "q"
 	    },
 	    domProps: {
@@ -664,57 +727,24 @@ webpackJsonp([2,0],[
 	        _vm.searchParams.textQuery = $event.target.value
 	      }
 	    }
-	  }), _vm._v(" "), _c('label', [_vm._v("Member Type")]), _vm._v(" "), _c('select', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.searchParams.memberType),
-	      expression: "searchParams.memberType"
-	    }],
+	  }), _vm._v(" "), _c('input', {
+	    attrs: {
+	      "type": "button",
+	      "value": "Search"
+	    },
 	    on: {
-	      "change": [function($event) {
-	        _vm.searchParams.memberType = Array.prototype.filter.call($event.target.options, function(o) {
-	          return o.selected
-	        }).map(function(o) {
-	          var val = "_value" in o ? o._value : o.value;
-	          return val
-	        })[0]
-	      }, _vm.filterMembers]
+	      "click": _vm.filterMembers
 	    }
-	  }, [_c('option', {
-	    attrs: {
-	      "value": "host"
-	    }
-	  }, [_vm._v("Host")]), _vm._v(" "), _c('option', {
-	    attrs: {
-	      "value": "wwoofer"
-	    }
-	  }, [_vm._v("WWOOFER")])]), _vm._v(" "), _c('label', [_vm._v("Farming Method")]), _vm._v(" "), _c('select', {
-	    directives: [{
-	      name: "model",
-	      rawName: "v-model",
-	      value: (_vm.searchParams.farmMethod),
-	      expression: "searchParams.farmMethod"
-	    }],
-	    on: {
-	      "change": [function($event) {
-	        _vm.searchParams.farmMethod = Array.prototype.filter.call($event.target.options, function(o) {
-	          return o.selected
-	        }).map(function(o) {
-	          var val = "_value" in o ? o._value : o.value;
-	          return val
-	        })[0]
-	      }, _vm.filterMembers]
-	    }
-	  }, [_c('option', {
-	    attrs: {
-	      "value": ""
-	    }
-	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Organic")]), _vm._v(" "), _c('option', [_vm._v("Permaculture")]), _vm._v(" "), _c('option', [_vm._v("Biodynamic")])]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group"
-	  }, [_c('label', [_vm._v("Skills Required")]), _c('br'), _vm._v(" "), _vm._l((_vm.SkillTypes), function(s) {
-	    return _c('div', {
-	      staticClass: "form-group"
+	  })])]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('h4', [_vm._v("Skills Required")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "checkbox-group"
+	  }, _vm._l((_vm.SkillTypes), function(s) {
+	    return _c('label', {
+	      staticClass: "checkbox-inline",
+	      attrs: {
+	        "for": s
+	      }
 	    }, [_c('input', {
 	      directives: [{
 	        name: "model",
@@ -748,15 +778,140 @@ webpackJsonp([2,0],[
 	          }
 	        }, _vm.filterMembers]
 	      }
-	    }), _vm._v(" "), _c('label', {
-	      staticStyle: {
-	        "font-weight": "400"
-	      },
+	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
+	  }))]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('h4', [_vm._v("Diet")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "checkbox-group"
+	  }, _vm._l((_vm.Diets), function(s) {
+	    return _c('label', {
+	      staticClass: "checkbox-inline",
 	      attrs: {
 	        "for": s
 	      }
-	    }, [_vm._v(_vm._s(s) + "  ")])])
-	  })], true), _vm._v(" "), _c('div', {
+	    }, [_c('input', {
+	      directives: [{
+	        name: "model",
+	        rawName: "v-model",
+	        value: (_vm.searchParams.diet),
+	        expression: "searchParams.diet"
+	      }],
+	      attrs: {
+	        "type": "checkbox",
+	        "id": s
+	      },
+	      domProps: {
+	        "value": s,
+	        "checked": Array.isArray(_vm.searchParams.diet) ? _vm._i(_vm.searchParams.diet, s) > -1 : _vm._q(_vm.searchParams.diet, true)
+	      },
+	      on: {
+	        "change": [function($event) {
+	          var $$a = _vm.searchParams.diet,
+	            $$el = $event.target,
+	            $$c = $$el.checked ? (true) : (false);
+	          if (Array.isArray($$a)) {
+	            var $$v = s,
+	              $$i = _vm._i($$a, $$v);
+	            if ($$c) {
+	              $$i < 0 && (_vm.searchParams.diet = $$a.concat($$v))
+	            } else {
+	              $$i > -1 && (_vm.searchParams.diet = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+	            }
+	          } else {
+	            _vm.searchParams.diet = $$c
+	          }
+	        }, _vm.filterMembers]
+	      }
+	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
+	  }))]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('h4', [_vm._v("Length of Stay")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "checkbox-group"
+	  }, _vm._l((_vm.LengthOfStay), function(s) {
+	    return _c('label', {
+	      staticClass: "checkbox-inline",
+	      attrs: {
+	        "for": s
+	      }
+	    }, [_c('input', {
+	      directives: [{
+	        name: "model",
+	        rawName: "v-model",
+	        value: (_vm.searchParams.staylength),
+	        expression: "searchParams.staylength"
+	      }],
+	      attrs: {
+	        "type": "checkbox",
+	        "id": s
+	      },
+	      domProps: {
+	        "value": s,
+	        "checked": Array.isArray(_vm.searchParams.staylength) ? _vm._i(_vm.searchParams.staylength, s) > -1 : _vm._q(_vm.searchParams.staylength, true)
+	      },
+	      on: {
+	        "change": [function($event) {
+	          var $$a = _vm.searchParams.staylength,
+	            $$el = $event.target,
+	            $$c = $$el.checked ? (true) : (false);
+	          if (Array.isArray($$a)) {
+	            var $$v = s,
+	              $$i = _vm._i($$a, $$v);
+	            if ($$c) {
+	              $$i < 0 && (_vm.searchParams.staylength = $$a.concat($$v))
+	            } else {
+	              $$i > -1 && (_vm.searchParams.staylength = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+	            }
+	          } else {
+	            _vm.searchParams.staylength = $$c
+	          }
+	        }, _vm.filterMembers]
+	      }
+	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
+	  }))]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline"
+	  }, [_c('label', [_vm._v("Farming Method")]), _vm._v(" "), _c('select', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.farmMethod),
+	      expression: "searchParams.farmMethod"
+	    }],
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.farmMethod = Array.prototype.filter.call($event.target.options, function(o) {
+	          return o.selected
+	        }).map(function(o) {
+	          var val = "_value" in o ? o._value : o.value;
+	          return val
+	        })[0]
+	      }, _vm.filterMembers]
+	    }
+	  }, [_c('option', {
+	    attrs: {
+	      "value": ""
+	    }
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Organic")]), _vm._v(" "), _c('option', [_vm._v("Permaculture")]), _vm._v(" "), _c('option', [_vm._v("Biodynamic")])]), _vm._v(" "), _c('label', [_vm._v("State")]), _vm._v(" "), _c('select', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.state),
+	      expression: "searchParams.state"
+	    }],
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.state = Array.prototype.filter.call($event.target.options, function(o) {
+	          return o.selected
+	        }).map(function(o) {
+	          var val = "_value" in o ? o._value : o.value;
+	          return val
+	        })[0]
+	      }, _vm.filterMembers]
+	    }
+	  }, [_c('option', {
+	    attrs: {
+	      "value": ""
+	    }
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])]), _vm._v(" "), _c('div', {
 	    staticClass: "form-group"
 	  }, [_c('br'), _vm._v(" "), _c('label', {
 	    directives: [{
@@ -852,7 +1007,7 @@ webpackJsonp([2,0],[
 	        _vm.mapOnly = !_vm.mapOnly
 	      }
 	    }
-	  }, [_vm._v("Toggle List")])])])]), _vm._v(" "), _vm._v(" "), _c('div', {
+	  }, [_vm._v("Toggle List")])]), _vm._v(" "), _vm._v(" "), _c('div', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

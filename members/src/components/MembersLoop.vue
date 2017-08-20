@@ -1,11 +1,13 @@
 <template>
 <div class="membersloop">
-     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous"> -->
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <div class="r" style="height:100%">
         
         <div v-bind:class="{ 'col-md-6' : !mapOnly, 'col-md-12': mapOnly } " class=" " >
 
+
+			<!-- This div holds the search UI for mobiles, with a limited choice of inputs and no list view -->
             <div class="holder hidden-md hidden-lg" style="position:relative;top:0;bottom:0;overflow-y:hidden;height:25vh;">
                 <div class="panel panel-noblueforyou">
                     <div class="panel-heading">
@@ -31,45 +33,64 @@
                         
                     </div>
                 </div>
-
-
- <div v-if="mapOnly" class="col-md-12" style="height:55vh;">
-            <v-map :center="center" :zoom="zoom" v-on:l-moveend="filterByMapVis">
-                <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution="OpenStreetMap"></v-tilelayer>
-                <v-cluster>
-                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" @l-click="markerClick(index)">
-                        <v-popup :content="m.title"> </v-popup>
-                    </v-marker>
-                </v-cluster>
-								<v-circlemarker :radius="radius" :visible="searchParams.nearMe" :lat-lng="mypos" :draggable="true" @l-dragend="setPosition"> </v-circlemarker>
-            </v-map>
-            <!-- <gmap-map :center="center" :zoom="7" @bounds_changed="filterByMapVis($event)">
-                <gmap-cluster>
-                <gmap-marker v-for="m in markers" :position="m.position" :clickable="true" @click="m.ifw= !m.ifw">
-                <gmap-info-window :opened="m.ifw" :content="m.ifw2text"></gmap-info-window>
-                </gmap-marker>
-                </gmap-cluster>
-                </gmap-map> -->
-  </div>
+				<div v-if="mapOnly" class="col-md-12" style="height:55vh;">
+							<v-map :center="center" :zoom="zoom" v-on:l-moveend="filterByMapVis">
+								<v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution="OpenStreetMap"></v-tilelayer>
+								<v-cluster>
+									<v-marker v-for="(m, index) in markers" :lat-lng="m.position" @l-click="markerClick(index)">
+										<v-popup :content="m.title"> </v-popup>
+									</v-marker>
+								</v-cluster>
+												<v-circlemarker :radius="radius" :visible="searchParams.nearMe" :lat-lng="mypos" :draggable="true" @l-dragend="setPosition"> </v-circlemarker>
+							</v-map>
+				</div>
             </div>
 
 
-
-
-
-
+			<!-- Desktop UI -->
             <div class="holder hidden-xs hidden-sm" style="position:relative;top:0;bottom:0;overflow-y:auto;height:85vh;">
                 <div class="panel panel-noblueforyou">
-                    <div class="panel-heading">
-                        
+
+					<div class="panel-body">
+ 						<div class="form-group form-inline">
+							<input id="host" value="host"  type="radio" v-on:change="filterMembers" v-model="searchParams.memberType">
+							<label for="host">Host</label>
+							<input id="wwoofer" value="wwoofer"  type="radio" v-on:change="filterMembers" v-model="searchParams.memberType">
+							<label for="wwoofer">WWOOFer</label>
+						</div>
+						<div class="form-group form-inline">
+							<input type="search" placeholder="General Search" id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
+                            <input type="button" v-on:click="filterMembers" value="Search">
+
+						</div>
+					</div>
+						<div class="form-group form-inline">
+							<h4>Skills Required</h4><br>
+							<div class="checkbox-group" >
+								<label v-for="s in SkillTypes" class="checkbox-inline" :for="s">
+								<input type="checkbox" :id="s" :value="s" v-model="searchParams.skillsReq" v-on:change="filterMembers">
+								{{s}} &nbsp</label>
+							</div>  
+						</div>
+
+						<div class="form-group form-inline">
+							<h4>Diet</h4><br>
+							<div class="checkbox-group" >
+								<label v-for="s in Diets" class="checkbox-inline" :for="s">
+								<input type="checkbox" :id="s" :value="s" v-model="searchParams.diet" v-on:change="filterMembers">
+								{{s}} &nbsp</label>
+							</div>  
+						</div>
+						<div class="form-group form-inline">
+							<h4>Length of Stay</h4><br>
+							<div class="checkbox-group" >
+								<label class="checkbox-inline" v-for="s in LengthOfStay" :for="s">
+									<input type="checkbox" :id="s" :value="s" v-model="searchParams.staylength" v-on:change="filterMembers">
+								{{s}} &nbsp</label>
+							</div>  
+						</div>
+
                         <div class="form-group form-inline">
-                            <label for="q">Search</label> <input id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
-                            
-							<label>Member Type</label>
-                            <select v-model="searchParams.memberType" v-on:change="filterMembers">
-                                <option value="host">Host</option>
-                                <option value="wwoofer">WWOOFER</option>
-                            </select>
                             <label>Farming Method</label>
                             <select v-model="searchParams.farmMethod" v-on:change="filterMembers">
                                 <option value="">Any</option>
@@ -77,31 +98,37 @@
                                 <option>Permaculture</option>
                                 <option>Biodynamic</option>
                             </select>
-                            <div class="form-group">
-                                <label>Skills Required</label><br>
-                                <div class="form-group" v-for="s in SkillTypes">
-                                    <input type="checkbox" :id="s" :value="s" v-model="searchParams.skillsReq" v-on:change="filterMembers">
-                                    <label style="font-weight:400;" :for="s">{{s}} &nbsp</label>
-                                </div>
+							<label>State</label>
+                            <select v-model="searchParams.state" v-on:change="filterMembers">
+                                <option value="">Any</option>
+                                <option>ACT</option>
+                                <option>VIC</option>
+                                <option>QLD</option>
+								<option>TAS</option>
+								<option>WA</option>
+								<option>NT</option>
+								<option>SA</option>
+                            </select>
                             </div>
-														<div class="form-group">
-														<br>
-														<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
-															<label v-show="showNearBy">Near By Me</label>
-															<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
-															<select v-show="searchParams.nearMe" v-model="searchParams.distance" v-on:change="filterMembers">
-																<option value=50>50km</option>
-																<option value=100>100km</option>
-																<option value=250>250km</option>
-																<option value=500>500km</option>
-															</select>
-														</div>
+											<div class="form-group">
+											<br>
+											<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
+												<label v-show="showNearBy">Near By Me</label>
+												<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
+												<select v-show="searchParams.nearMe" v-model="searchParams.distance" v-on:change="filterMembers">
+													<option value=50>50km</option>
+													<option value=100>100km</option>
+													<option value=250>250km</option>
+													<option value=500>500km</option>
+												</select>
+											</div>
                             <p>Found: {{totalCnt}} Filtered by Map: {{resultCnt}} </p>
 														<button @click="mapOnly = !mapOnly">Toggle List</button>
-							</div>
+							
                         
-                    </div>
+                    
                 </div>
+
                 <!--member loop -->
                 <div class="col-md-12" v-show="progress < 100">
                     <div class="cssload-wrap">
@@ -219,7 +246,7 @@ gmap-map {
     data: function () {
       return {
         members: [],
-        searchParams: { textQuery: "", memberType: "host", farmMethod: "Any",skillsReq:[], page: 1,nearMe: false,distance: 50 },
+        searchParams: {state:"",staylength: [], diet:[], textQuery: "", memberType: "host", farmMethod: "Any",skillsReq:[], page: 1,nearMe: false,distance: 50 },
         center: { lat: -38, lng: 144 },
         markers: [],
         fullmembers: [],
@@ -230,7 +257,9 @@ gmap-map {
 				SkillTypes: ["General Gardening","Weeding","Pruning","Animal Care"
 				,"Building","Fencing","Dairy","Bee Keeping","Engineering","Mechanical"],
 				selectedID: -1,
-
+				UserTypes: ["Host", "WWOOFer"],
+				Diets: ["All diets catered for", "Fish", "Meat", "Vegetarian", "Vegetarian Only", "Vegan"],
+				LengthOfStay:["1-2 days", "3-7 days","1-2 weeks", "2-4 weeks","Whatever suits"],
 				mapOnly: false,
 				listOnly: false,
 				radius: 10,
@@ -370,7 +399,21 @@ if(this.selectedID != -1) {
         this.progress = 0;
         this.searchParams.page = 1;
 				this.paginationCur = 1;
-        this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', { lat: this.mypos.lat,long: this.mypos.lng, nearme: this.searchParams.nearMe, distance: this.searchParams.distance, page: this.searchParams.page, type: this.searchParams.memberType, q: this.searchParams.textQuery, farmmethod: this.searchParams.farmMethod, skillsreq: this.searchParams.skillsReq }).then(function (response) {
+        this.$http.post(gwVue.Url + '/wp-json/gwmp/v1/members', 
+		{ 
+			lat: this.mypos.lat,
+			long: this.mypos.lng, 
+			nearme: this.searchParams.nearMe, 
+			distance: this.searchParams.distance, 
+			page: this.searchParams.page, 
+			type: this.searchParams.memberType, 
+			q: this.searchParams.textQuery, 
+			farmmethod: this.searchParams.farmMethod, 
+			skillsreq: this.searchParams.skillsReq,
+			diet: this.searchParams.diet,
+			state: this.searchParams.state,
+			staylength: this.searchParams.staylength 
+		}).then(function (response) {
           //console.log(response);
           // this.data.members = response.data;
           if (Array.isArray(response.data)) {
@@ -455,6 +498,9 @@ a:hover {
 	text-decoration: none;
 	color:#D32F2F;
 }
+
+
+
 
 .cssload-wrap {
 	text-align: center;
