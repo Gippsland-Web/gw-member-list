@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.3.0
+Version: 1.3.1
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
@@ -96,6 +96,8 @@ function gwmp_get_members($request) {
 					}
 					$includes = $res;
 				}
+			if($includes == NULL)
+			return;
 	}
 	if(count($request["skillsreq"]) > 0){
 			if($includes == NULL)
@@ -108,6 +110,8 @@ function gwmp_get_members($request) {
 					}
 					$includes = $res;
 				}
+			if($includes == NULL)
+				return;
 	}
 	if(count($request["diet"]) > 0){
 			if($includes == NULL)
@@ -120,6 +124,8 @@ function gwmp_get_members($request) {
 					}
 					$includes = $res;
 				}
+			if($includes == NULL)
+				return;
 	}
 	if(count($request["staylength"]) > 0){
 			if($includes == NULL)
@@ -132,10 +138,9 @@ function gwmp_get_members($request) {
 					}
 					$includes = $res;
 				}
+			if($includes == NULL)
+				return;
 	}
-	
-	if(is_array($includes) && count($includes) == 0)
-	return "";
 
 	if(count($includes) > 0) {
 		$query = 'include=' . implode(",", $includes);
@@ -289,6 +294,6 @@ function my_custom_ids( $field_name, $field_value = '' ) {
 		return $custom_ids_str;
 	}
 	else
-		return array(0);
+		return NULL;
 
 }

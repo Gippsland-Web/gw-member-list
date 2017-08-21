@@ -62,6 +62,72 @@ a[data-v-c80fc302]:hover {
 	text-decoration: none;
 	color:#D32F2F;
 }
+.search-methods > select[data-v-c80fc302], .search-state > select[data-v-c80fc302] {
+	border: 0px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    color: #555;
+	background-color:transparent;
+  	padding: 8px 10px 7px;
+	display:block;
+	width:100%;
+	font-family: Helvetica, sans-serif, 'Trebuchet MS';
+    font-size: 14px;
+	min-height:36px;
+	text-align: left;     
+	border-radius: 45px !important;
+    -webkit-border-radius: 45px !important;
+    -moz-border-radius: 45px !important;
+    -o-border-radius: 45px !important;
+	box-shadow: 2px 0px 30px rgba(0,0,0,0);
+    -webkit-box-shadow: 0px 0px 9px rgba(0,0,0,0);
+    -moz-box-shadow: 2px 0px 30px rgba(0,0,0,0);
+ transition: all 0.3s linear 0s;
+}
+.search-query[data-v-c80fc302] {
+
+	border: 0px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    color: #555;
+	background-color:transparent;
+	border-color:#dd3559;
+  	padding: 8px 10px 7px;
+	
+	width:80%;
+	font-family: Helvetica, sans-serif, 'Trebuchet MS';
+    font-size: 14px;
+	min-height:36px;
+	text-align: left;     
+	border-radius: 45px !important;
+    -webkit-border-radius: 45px !important;
+    -moz-border-radius: 45px !important;
+    -o-border-radius: 45px !important;
+	box-shadow: 2px 0px 30px rgba(0,0,0,0);
+    -webkit-box-shadow: 0px 0px 9px rgba(0,0,0,0);
+    -moz-box-shadow: 2px 0px 30px rgba(0,0,0,0);
+ transition: all 0.3s linear 0s;
+}
+.search-submit[data-v-c80fc302] {
+	color:#fff;
+	background-color:#d32f2f;
+	border:2px solid #f92c8b;
+	box-shadow: 0px 5px 20px #d6dee4;
+	border-radius: 45px !important;
+	font-size:15px;
+	min-height:36px;
+	padding: 8px 20px;
+}
+.search-map-toggle[data-v-c80fc302] {
+	color:#fff;
+	background-color:#d32f2f;
+	border:2px solid #f92c8b;
+	box-shadow: 0px 5px 20px #d6dee4;
+	border-radius: 45px !important;
+	font-size:15px;
+	min-height:36px;
+	padding: 8px 20px;
+}
 .cssload-wrap[data-v-c80fc302] {
 	text-align: center;
 	line-height: 195px;

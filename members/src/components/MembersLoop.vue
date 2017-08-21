@@ -52,20 +52,21 @@
                 <div class="panel panel-noblueforyou">
 
 					<div class="panel-body">
- 						<div class="form-group form-inline">
+						<h4  class="search-label">Member Type</h4>
+ 						<div class="form-group form-inline search-type">
 							<input id="host" value="host"  type="radio" v-on:change="filterMembers" v-model="searchParams.memberType">
 							<label for="host">Host</label>
 							<input id="wwoofer" value="wwoofer"  type="radio" v-on:change="filterMembers" v-model="searchParams.memberType">
 							<label for="wwoofer">WWOOFer</label>
 						</div>
-						<div class="form-group form-inline">
-							<input type="search" placeholder="General Search" id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
-                            <input type="button" v-on:click="filterMembers" value="Search">
+						<div class="form-group form-inline search-group">
+							<input class="search-query" type="search" placeholder="General Search" id="q" v-model="searchParams.textQuery" v-on:change="filterMembers" v-on:keyup="searchParams.textQuery = $event.target.value; filterMembers();">
+                            <input class="search-submit" type="button" v-on:click="filterMembers" value="Search">
 
 						</div>
 					</div>
-						<div class="form-group form-inline">
-							<h4>Skills Required</h4><br>
+						<div class="form-group form-inline search-skills">
+							<h4 class="search-label">Skills Required</h4><br>
 							<div class="checkbox-group" >
 								<label v-for="s in SkillTypes" class="checkbox-inline" :for="s">
 								<input type="checkbox" :id="s" :value="s" v-model="searchParams.skillsReq" v-on:change="filterMembers">
@@ -73,16 +74,16 @@
 							</div>  
 						</div>
 
-						<div class="form-group form-inline">
-							<h4>Diet</h4><br>
+						<div class="form-group form-inline search-diet">
+							<h4 class="search-label">Diet</h4><br>
 							<div class="checkbox-group" >
 								<label v-for="s in Diets" class="checkbox-inline" :for="s">
 								<input type="checkbox" :id="s" :value="s" v-model="searchParams.diet" v-on:change="filterMembers">
 								{{s}} &nbsp</label>
 							</div>  
 						</div>
-						<div class="form-group form-inline">
-							<h4>Length of Stay</h4><br>
+						<div class="form-group form-inline search-stay">
+							<h4 class="search-label">Length of Stay</h4><br>
 							<div class="checkbox-group" >
 								<label class="checkbox-inline" v-for="s in LengthOfStay" :for="s">
 									<input type="checkbox" :id="s" :value="s" v-model="searchParams.staylength" v-on:change="filterMembers">
@@ -90,31 +91,38 @@
 							</div>  
 						</div>
 
-                        <div class="form-group form-inline">
-                            <label>Farming Method</label>
-                            <select v-model="searchParams.farmMethod" v-on:change="filterMembers">
-                                <option value="">Any</option>
-                                <option>Organic</option>
-                                <option>Permaculture</option>
-                                <option>Biodynamic</option>
-                            </select>
-							<label>State</label>
-                            <select v-model="searchParams.state" v-on:change="filterMembers">
-                                <option value="">Any</option>
-                                <option>ACT</option>
-                                <option>VIC</option>
-                                <option>QLD</option>
-								<option>TAS</option>
-								<option>WA</option>
-								<option>NT</option>
-								<option>SA</option>
-                            </select>
+                        <div class="form-group form-inline ">
+							<div class="col-sm-6 search-methods">
+								<h4 class="search-label">Farming Method</h4>
+								<select v-model="searchParams.farmMethod" v-on:change="filterMembers">
+									<option value="">Any</option>
+									<option>Organic</option>
+									<option>Permaculture</option>
+									<option>Biodynamic</option>
+								</select>
+							</div>
+							<div class="col-sm-6 search-state">
+								<h4 class="search-label">State</h4>
+								<select v-model="searchParams.state" v-on:change="filterMembers">
+									<option value="">Any</option>
+									<option>ACT</option>
+									<option>VIC</option>
+									<option>QLD</option>
+									<option>TAS</option>
+									<option>WA</option>
+									<option>NT</option>
+									<option>SA</option>
+								</select>
+							</div>
+                            
+							
                             </div>
-											<div class="form-group">
+											<div class="form-group search-params">
 											<br>
 											<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
-												<label v-show="showNearBy">Near By Me</label>
 												<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
+												<label v-show="showNearBy">Near By Me</label>
+
 												<select v-show="searchParams.nearMe" v-model="searchParams.distance" v-on:change="filterMembers">
 													<option value=50>50km</option>
 													<option value=100>100km</option>
@@ -123,14 +131,14 @@
 												</select>
 											</div>
                             <p>Found: {{totalCnt}} Filtered by Map: {{resultCnt}} </p>
-														<button @click="mapOnly = !mapOnly">Toggle List</button>
+														<button class="search-map-toggle" @click="mapOnly = !mapOnly">Toggle List</button>
 							
                         
                     
                 </div>
 
                 <!--member loop -->
-                <div class="col-md-12" v-show="progress < 100">
+                <div class="col-md-12 member-loop" v-show="progress < 100">
                     <div class="cssload-wrap">
                         <div class="cssload-container">
                             <span class="cssload-dots"></span>
@@ -498,8 +506,83 @@ a:hover {
 	text-decoration: none;
 	color:#D32F2F;
 }
+.search-methods > select, .search-state > select {
+	border: 0px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    color: #555;
+	background-color:transparent;
+  	padding: 8px 10px 7px;
+	display:block;
+	width:100%;
+	font-family: Helvetica, sans-serif, 'Trebuchet MS';
+    font-size: 14px;
+	min-height:36px;
+	text-align: left;     
+	border-radius: 45px !important;
+    -webkit-border-radius: 45px !important;
+    -moz-border-radius: 45px !important;
+    -o-border-radius: 45px !important;
+	box-shadow: 2px 0px 30px rgba(0,0,0,0);
+    -webkit-box-shadow: 0px 0px 9px rgba(0,0,0,0);
+    -moz-box-shadow: 2px 0px 30px rgba(0,0,0,0);
+	-webkit-transition: all 0.3s linear 0s;
+  -moz-transition: all 0.3s linear 0s;
+  -ms-transition: all 0.3s linear 0s;
+  -o-transition: all 0.3s linear 0s;
+  transition: all 0.3s linear 0s;
+}
 
 
+.search-query {
+
+	border: 0px solid rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    color: #555;
+	background-color:transparent;
+	border-color:#dd3559;
+  	padding: 8px 10px 7px;
+	
+	width:80%;
+	font-family: Helvetica, sans-serif, 'Trebuchet MS';
+    font-size: 14px;
+	min-height:36px;
+	text-align: left;     
+	border-radius: 45px !important;
+    -webkit-border-radius: 45px !important;
+    -moz-border-radius: 45px !important;
+    -o-border-radius: 45px !important;
+	box-shadow: 2px 0px 30px rgba(0,0,0,0);
+    -webkit-box-shadow: 0px 0px 9px rgba(0,0,0,0);
+    -moz-box-shadow: 2px 0px 30px rgba(0,0,0,0);
+	-webkit-transition: all 0.3s linear 0s;
+  -moz-transition: all 0.3s linear 0s;
+  -ms-transition: all 0.3s linear 0s;
+  -o-transition: all 0.3s linear 0s;
+  transition: all 0.3s linear 0s;
+}
+
+.search-submit {
+	color:#fff;
+	background-color:#d32f2f;
+	border:2px solid #f92c8b;
+	box-shadow: 0px 5px 20px #d6dee4;
+	border-radius: 45px !important;
+	font-size:15px;
+	min-height:36px;
+	padding: 8px 20px;
+}
+.search-map-toggle {
+	color:#fff;
+	background-color:#d32f2f;
+	border:2px solid #f92c8b;
+	box-shadow: 0px 5px 20px #d6dee4;
+	border-radius: 45px !important;
+	font-size:15px;
+	min-height:36px;
+	padding: 8px 20px;
+}
 
 
 .cssload-wrap {

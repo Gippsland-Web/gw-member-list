@@ -649,8 +649,10 @@ webpackJsonp([2,0],[
 	    staticClass: "panel panel-noblueforyou"
 	  }, [_c('div', {
 	    staticClass: "panel-body"
-	  }, [_c('div', {
-	    staticClass: "form-group form-inline"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("Member Type")]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline search-type"
 	  }, [_c('input', {
 	    directives: [{
 	      name: "model",
@@ -700,7 +702,7 @@ webpackJsonp([2,0],[
 	      "for": "wwoofer"
 	    }
 	  }, [_vm._v("WWOOFer")])]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group form-inline"
+	    staticClass: "form-group form-inline search-group"
 	  }, [_c('input', {
 	    directives: [{
 	      name: "model",
@@ -708,6 +710,7 @@ webpackJsonp([2,0],[
 	      value: (_vm.searchParams.textQuery),
 	      expression: "searchParams.textQuery"
 	    }],
+	    staticClass: "search-query",
 	    attrs: {
 	      "type": "search",
 	      "placeholder": "General Search",
@@ -728,6 +731,7 @@ webpackJsonp([2,0],[
 	      }
 	    }
 	  }), _vm._v(" "), _c('input', {
+	    staticClass: "search-submit",
 	    attrs: {
 	      "type": "button",
 	      "value": "Search"
@@ -736,8 +740,10 @@ webpackJsonp([2,0],[
 	      "click": _vm.filterMembers
 	    }
 	  })])]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group form-inline"
-	  }, [_c('h4', [_vm._v("Skills Required")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline search-skills"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("Skills Required")]), _c('br'), _vm._v(" "), _c('div', {
 	    staticClass: "checkbox-group"
 	  }, _vm._l((_vm.SkillTypes), function(s) {
 	    return _c('label', {
@@ -780,8 +786,10 @@ webpackJsonp([2,0],[
 	      }
 	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
 	  }))]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group form-inline"
-	  }, [_c('h4', [_vm._v("Diet")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline search-diet"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("Diet")]), _c('br'), _vm._v(" "), _c('div', {
 	    staticClass: "checkbox-group"
 	  }, _vm._l((_vm.Diets), function(s) {
 	    return _c('label', {
@@ -824,8 +832,10 @@ webpackJsonp([2,0],[
 	      }
 	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
 	  }))]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group form-inline"
-	  }, [_c('h4', [_vm._v("Length of Stay")]), _c('br'), _vm._v(" "), _c('div', {
+	    staticClass: "form-group form-inline search-stay"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("Length of Stay")]), _c('br'), _vm._v(" "), _c('div', {
 	    staticClass: "checkbox-group"
 	  }, _vm._l((_vm.LengthOfStay), function(s) {
 	    return _c('label', {
@@ -868,8 +878,12 @@ webpackJsonp([2,0],[
 	      }
 	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
 	  }))]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group form-inline"
-	  }, [_c('label', [_vm._v("Farming Method")]), _vm._v(" "), _c('select', {
+	    staticClass: "form-group form-inline "
+	  }, [_c('div', {
+	    staticClass: "col-sm-6 search-methods"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("Farming Method")]), _vm._v(" "), _c('select', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -890,7 +904,11 @@ webpackJsonp([2,0],[
 	    attrs: {
 	      "value": ""
 	    }
-	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Organic")]), _vm._v(" "), _c('option', [_vm._v("Permaculture")]), _vm._v(" "), _c('option', [_vm._v("Biodynamic")])]), _vm._v(" "), _c('label', [_vm._v("State")]), _vm._v(" "), _c('select', {
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Organic")]), _vm._v(" "), _c('option', [_vm._v("Permaculture")]), _vm._v(" "), _c('option', [_vm._v("Biodynamic")])])]), _vm._v(" "), _c('div', {
+	    staticClass: "col-sm-6 search-state"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("State")]), _vm._v(" "), _c('select', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -911,8 +929,8 @@ webpackJsonp([2,0],[
 	    attrs: {
 	      "value": ""
 	    }
-	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])]), _vm._v(" "), _c('div', {
-	    staticClass: "form-group"
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])])]), _vm._v(" "), _c('div', {
+	    staticClass: "form-group search-params"
 	  }, [_c('br'), _vm._v(" "), _c('label', {
 	    directives: [{
 	      name: "show",
@@ -920,14 +938,7 @@ webpackJsonp([2,0],[
 	      value: (!_vm.showNearBy),
 	      expression: "!showNearBy"
 	    }]
-	  }, [_vm._v("Please allow your browser to access your location for nearby search.")]), _vm._v(" "), _c('label', {
-	    directives: [{
-	      name: "show",
-	      rawName: "v-show",
-	      value: (_vm.showNearBy),
-	      expression: "showNearBy"
-	    }]
-	  }, [_vm._v("Near By Me")]), _vm._v(" "), _c('input', {
+	  }, [_vm._v("Please allow your browser to access your location for nearby search.")]), _vm._v(" "), _c('input', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -963,7 +974,14 @@ webpackJsonp([2,0],[
 	        }
 	      }, _vm.filterMembers]
 	    }
-	  }), _vm._v(" "), _c('select', {
+	  }), _vm._v(" "), _c('label', {
+	    directives: [{
+	      name: "show",
+	      rawName: "v-show",
+	      value: (_vm.showNearBy),
+	      expression: "showNearBy"
+	    }]
+	  }, [_vm._v("Near By Me")]), _vm._v(" "), _c('select', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -1002,6 +1020,7 @@ webpackJsonp([2,0],[
 	      "value": "500"
 	    }
 	  }, [_vm._v("500km")])])]), _vm._v(" "), _c('p', [_vm._v("Found: " + _vm._s(_vm.totalCnt) + " Filtered by Map: " + _vm._s(_vm.resultCnt) + " ")]), _vm._v(" "), _c('button', {
+	    staticClass: "search-map-toggle",
 	    on: {
 	      "click": function($event) {
 	        _vm.mapOnly = !_vm.mapOnly
@@ -1014,7 +1033,7 @@ webpackJsonp([2,0],[
 	      value: (_vm.progress < 100),
 	      expression: "progress < 100"
 	    }],
-	    staticClass: "col-md-12"
+	    staticClass: "col-md-12 member-loop"
 	  }, [_vm._m(0)]), _vm._v(" "), _vm._l((_vm.membersFiltered), function(m, index) {
 	    return (!_vm.mapOnly) ? _c('div', {
 	      directives: [{
