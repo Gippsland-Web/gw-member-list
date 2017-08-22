@@ -505,7 +505,7 @@ webpackJsonp([2,0],[
 	    }
 	  }), _vm._v(" "), _c('div', {
 	    staticClass: "form-group"
-	  }, [_c('br'), _vm._v(" "), _c('label', {
+	  }, [_c('label', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",
@@ -743,7 +743,7 @@ webpackJsonp([2,0],[
 	    staticClass: "form-group form-inline search-skills"
 	  }, [_c('h4', {
 	    staticClass: "search-label"
-	  }, [_vm._v("Skills Required")]), _c('br'), _vm._v(" "), _c('div', {
+	  }, [_vm._v("Skills Required")]), _vm._v(" "), _c('div', {
 	    staticClass: "checkbox-group"
 	  }, _vm._l((_vm.SkillTypes), function(s) {
 	    return _c('label', {
@@ -835,7 +835,7 @@ webpackJsonp([2,0],[
 	    staticClass: "form-group form-inline search-stay"
 	  }, [_c('h4', {
 	    staticClass: "search-label"
-	  }, [_vm._v("Length of Stay")]), _c('br'), _vm._v(" "), _c('div', {
+	  }, [_vm._v("Length of Stay")]), _vm._v(" "), _c('div', {
 	    staticClass: "checkbox-group"
 	  }, _vm._l((_vm.LengthOfStay), function(s) {
 	    return _c('label', {
@@ -879,6 +879,11 @@ webpackJsonp([2,0],[
 	    }), _vm._v("\n\t\t\t\t\t\t\t\t" + _vm._s(s) + "  ")])
 	  }))]), _vm._v(" "), _c('div', {
 	    staticClass: "form-group form-inline "
+	  }, [_c('div', {
+	    staticClass: "search-twocol",
+	    staticStyle: {
+	      "min-height": "78px"
+	    }
 	  }, [_c('div', {
 	    staticClass: "col-sm-6 search-methods"
 	  }, [_c('h4', {
@@ -929,9 +934,9 @@ webpackJsonp([2,0],[
 	    attrs: {
 	      "value": ""
 	    }
-	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])])])]), _vm._v(" "), _c('div', {
 	    staticClass: "form-group search-params"
-	  }, [_c('br'), _vm._v(" "), _c('label', {
+	  }, [_c('label', {
 	    directives: [{
 	      name: "show",
 	      rawName: "v-show",

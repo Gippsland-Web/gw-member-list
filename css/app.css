@@ -84,6 +84,9 @@ a[data-v-c80fc302]:hover {
     -moz-box-shadow: 2px 0px 30px rgba(0,0,0,0);
  transition: all 0.3s linear 0s;
 }
+.search-type > label[data-v-c80fc302] {
+	padding-right:30px;
+}
 .search-query[data-v-c80fc302] {
 
 	border: 0px solid rgba(0, 0, 0, 0.1);

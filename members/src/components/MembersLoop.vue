@@ -18,7 +18,7 @@
 							                          
                             
 					<div class="form-group">
-					<br>
+					
 					<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
 						<label v-show="showNearBy">Near By Me</label>
 						<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 						<div class="form-group form-inline search-skills">
-							<h4 class="search-label">Skills Required</h4><br>
+							<h4 class="search-label">Skills Required</h4>
 							<div class="checkbox-group" >
 								<label v-for="s in SkillTypes" class="checkbox-inline" :for="s">
 								<input type="checkbox" :id="s" :value="s" v-model="searchParams.skillsReq" v-on:change="filterMembers">
@@ -83,7 +83,7 @@
 							</div>  
 						</div>
 						<div class="form-group form-inline search-stay">
-							<h4 class="search-label">Length of Stay</h4><br>
+							<h4 class="search-label">Length of Stay</h4>
 							<div class="checkbox-group" >
 								<label class="checkbox-inline" v-for="s in LengthOfStay" :for="s">
 									<input type="checkbox" :id="s" :value="s" v-model="searchParams.staylength" v-on:change="filterMembers">
@@ -92,6 +92,7 @@
 						</div>
 
                         <div class="form-group form-inline ">
+							<div class="search-twocol" style="min-height:78px;">
 							<div class="col-sm-6 search-methods">
 								<h4 class="search-label">Farming Method</h4>
 								<select v-model="searchParams.farmMethod" v-on:change="filterMembers">
@@ -114,11 +115,11 @@
 									<option>SA</option>
 								</select>
 							</div>
-                            
+                            </div>
 							
                             </div>
 											<div class="form-group search-params">
-											<br>
+											
 											<label v-show="!showNearBy">Please allow your browser to access your location for nearby search.</label>
 												<input v-show="showNearBy" type="checkbox" v-model="searchParams.nearMe" v-on:change="filterMembers">
 												<label v-show="showNearBy">Near By Me</label>
@@ -531,6 +532,9 @@ a:hover {
   -ms-transition: all 0.3s linear 0s;
   -o-transition: all 0.3s linear 0s;
   transition: all 0.3s linear 0s;
+}
+.search-type > label {
+	padding-right:30px;
 }
 
 
