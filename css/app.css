@@ -62,7 +62,7 @@ a[data-v-c80fc302]:hover {
 	text-decoration: none;
 	color:#D32F2F;
 }
-.search-methods > select[data-v-c80fc302], .search-state > select[data-v-c80fc302] {
+.search-methods > select[data-v-c80fc302], .search-state > select[data-v-c80fc302], .search-farmtype > select[data-v-c80fc302] {
 	border: 0px solid rgba(0, 0, 0, 0.1);
 	border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;

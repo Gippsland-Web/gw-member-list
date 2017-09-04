@@ -115,8 +115,8 @@
 									<option>SA</option>
 								</select>
 							</div>
-							<div class="col-sm-4 search-state">
-								<h4 class="search-label">State</h4>
+							<div class="col-sm-4 search-farmtype">
+								<h4 class="search-label">Type of Farm</h4>
 								<select v-model="searchParams.typeoffarm" v-on:change="filterMembers">
 									<option value="">Any</option>
 									<option>Commercial Farm</option>
@@ -191,7 +191,7 @@
             <v-map :center="center" :zoom="zoom" v-on:l-moveend="filterByMapVis">
                 <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution="OpenStreetMap"></v-tilelayer>
                 <v-cluster>
-                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" @l-click="markerClick(index)">
+                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" :icon="m.theicon" @l-click="markerClick(index)">
                         <v-popup :content="m.title"> </v-popup>
                     </v-marker>
                 </v-cluster>
@@ -214,7 +214,7 @@
             <v-map :center="center" :zoom="zoom" v-on:l-moveend="filterByMapVis">
                 <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png" attribution="OpenStreetMap"></v-tilelayer>
                 <v-cluster>
-                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" @l-click="markerClick(index)">
+                    <v-marker v-for="(m, index) in markers" :lat-lng="m.position" :icon="m.theicon" @l-click="markerClick(index)">
                         <v-popup :content="m.title"> </v-popup>
                     </v-marker>
                 </v-cluster>
@@ -253,7 +253,7 @@ gmap-map {
 
 //  import Cluster from './Cluster.vue';
   import _ from 'lodash';
-
+import L from 'leaflet';
 
   export default {
     name: 'membersloop',
@@ -264,24 +264,49 @@ gmap-map {
     data: function () {
       return {
         members: [],
-        searchParams: {state:"",staylength: [], diet:[], textQuery: "", typeoffarm:"", memberType: "host", farmMethod: "Any",skillsReq:[], page: 1,nearMe: false,distance: 50 },
+        searchParams: {state:"",staylength: [], diet:[], textQuery: "", typeoffarm:"", memberType: "host", farmMethod: "",skillsReq:[], page: 1,nearMe: false,distance: 50 },
         center: { lat: -38, lng: 144 },
         markers: [],
         fullmembers: [],
         bounds: {},
         paginationCur: 1,
         progress: 1,
-				mypos: { lat: -1,lng: -1 },
-				SkillTypes: ["General Gardening","Weeding","Pruning","Animal Care"
-				,"Building","Fencing","Dairy","Bee Keeping","Engineering","Mechanical"],
-				selectedID: -1,
-				UserTypes: ["Host", "WWOOFer"],
-				Diets: ["All diets catered for", "Fish", "Meat", "Vegetarian", "Vegetarian Only", "Vegan"],
-				LengthOfStay:["1-2 days", "3-7 days","1-2 weeks", "2-4 weeks","Whatever suits"],
-				mapOnly: false,
-				listOnly: false,
-				radius: 10,
-				zoom: 5,
+		mypos: { lat: -1,lng: -1 },
+		SkillTypes: ["General Gardening","Weeding","Pruning","Animal Care"
+		,"Building","Fencing","Dairy","Bee Keeping","Engineering","Mechanical"],
+		selectedID: -1,
+		UserTypes: ["Host", "WWOOFer"],
+		Diets: ["All diets catered for", "Fish", "Meat", "Vegetarian", "Vegetarian Only", "Vegan"],
+		LengthOfStay:["1-2 days", "3-7 days","1-2 weeks", "2-4 weeks","Whatever suits"],
+		mapOnly: false,
+		listOnly: false,
+		radius: 10,
+		zoom: 5,
+		redIcon: new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+}),
+	greenIcon: new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+})
+	,
+	blueIcon: new L.Icon({
+  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+})
       };
 
     },
@@ -398,12 +423,14 @@ if(this.selectedID != -1) {
 					  if(locMember.desc != false)
 					  	content += "<p>" + locMember.desc + "...</p>";
 					  content += "</a>";
-					
+			var theIcon = this.greenIcon;
+			if(locMember.type == "host")
+				theIcon = this.redIcon;		
           this.markers.push({
             position: pos,
-						title: content,
-            //title: this.fullmembers[i].name,
-						memberid: i
+			theicon: theIcon,
+			title: content,
+            memberid: i
           });
 
           //console.log("added " + loc);
@@ -464,7 +491,16 @@ if(this.selectedID != -1) {
 						var self = this;
 						console.log("try and geo locate pos since loc is not set yet");
 						navigator.geolocation.getCurrentPosition(
-							function(pos){ console.log(pos); self.mypos.lat = pos.coords.latitude; self.mypos.lng = pos.coords.longitude;self.initialDownload(); }, function(err){ console.log("Geo error: " + err); this.initialDownload(); });
+							function(pos){ 
+							console.log(pos); 
+							self.mypos.lat = pos.coords.latitude; 
+							self.mypos.lng = pos.coords.longitude;self.initialDownload();
+							 }, 
+							 function(err){ 
+							 console.log("Geo error: " + err); 
+							 window.alert("There was an error getting your location, Please enable geolocation then try again.");
+							 self.initialDownload(); 
+							 });
 
 					}
 					else {
@@ -517,7 +553,7 @@ a:hover {
 	text-decoration: none;
 	color:#D32F2F;
 }
-.search-methods > select, .search-state > select {
+.search-methods > select, .search-state > select, .search-farmtype > select {
 	border: 0px solid rgba(0, 0, 0, 0.1);
 	border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 2px;

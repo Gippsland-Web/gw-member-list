@@ -8,7 +8,7 @@ webpackJsonp([2,0],[
 
 	var _stringify2 = _interopRequireDefault(_stringify);
 
-	var _vue = __webpack_require__(2);
+	var _vue = __webpack_require__(3);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
@@ -117,9 +117,13 @@ webpackJsonp([2,0],[
 	  value: true
 	});
 
-	var _lodash = __webpack_require__(1);
+	var _lodash = __webpack_require__(2);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _leaflet = __webpack_require__(1);
+
+	var _leaflet2 = _interopRequireDefault(_leaflet);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -129,7 +133,7 @@ webpackJsonp([2,0],[
 	  data: function data() {
 	    return {
 	      members: [],
-	      searchParams: { state: "", staylength: [], diet: [], textQuery: "", typeoffarm: "", memberType: "host", farmMethod: "Any", skillsReq: [], page: 1, nearMe: false, distance: 50 },
+	      searchParams: { state: "", staylength: [], diet: [], textQuery: "", typeoffarm: "", memberType: "host", farmMethod: "", skillsReq: [], page: 1, nearMe: false, distance: 50 },
 	      center: { lat: -38, lng: 144 },
 	      markers: [],
 	      fullmembers: [],
@@ -145,7 +149,32 @@ webpackJsonp([2,0],[
 	      mapOnly: false,
 	      listOnly: false,
 	      radius: 10,
-	      zoom: 5
+	      zoom: 5,
+	      redIcon: new _leaflet2.default.Icon({
+	        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+	        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	        iconSize: [25, 41],
+	        iconAnchor: [12, 41],
+	        popupAnchor: [1, -34],
+	        shadowSize: [41, 41]
+	      }),
+	      greenIcon: new _leaflet2.default.Icon({
+	        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+	        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	        iconSize: [25, 41],
+	        iconAnchor: [12, 41],
+	        popupAnchor: [1, -34],
+	        shadowSize: [41, 41]
+	      }),
+
+	      blueIcon: new _leaflet2.default.Icon({
+	        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+	        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+	        iconSize: [25, 41],
+	        iconAnchor: [12, 41],
+	        popupAnchor: [1, -34],
+	        shadowSize: [41, 41]
+	      })
 	    };
 	  },
 	  mounted: function mounted() {
@@ -223,11 +252,12 @@ webpackJsonp([2,0],[
 	        content += "<h3 class='v-title' style='color:#D32F2F;	font-size:15px;	text-align:center;	text-transform: uppercase;	font-weight: 700;'>" + locMember.name + "</h3>";
 	        if (locMember.desc != false) content += "<p>" + locMember.desc + "...</p>";
 	        content += "</a>";
-
+	        var theIcon = this.greenIcon;
+	        if (locMember.type == "host") theIcon = this.redIcon;
 	        this.markers.push({
 	          position: pos,
+	          theicon: theIcon,
 	          title: content,
-
 	          memberid: i
 	        });
 	      }
@@ -281,9 +311,13 @@ webpackJsonp([2,0],[
 	        var self = this;
 	        console.log("try and geo locate pos since loc is not set yet");
 	        navigator.geolocation.getCurrentPosition(function (pos) {
-	          console.log(pos);self.mypos.lat = pos.coords.latitude;self.mypos.lng = pos.coords.longitude;self.initialDownload();
+	          console.log(pos);
+	          self.mypos.lat = pos.coords.latitude;
+	          self.mypos.lng = pos.coords.longitude;self.initialDownload();
 	        }, function (err) {
-	          console.log("Geo error: " + err);this.initialDownload();
+	          console.log("Geo error: " + err);
+	          window.alert("There was an error getting your location, Please enable geolocation then try again.");
+	          self.initialDownload();
 	        });
 	      } else {
 	        console.log("geoloc disabled, or location already set");
@@ -936,10 +970,10 @@ webpackJsonp([2,0],[
 	      "value": ""
 	    }
 	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])]), _vm._v(" "), _c('div', {
-	    staticClass: "col-sm-4 search-state"
+	    staticClass: "col-sm-4 search-farmtype"
 	  }, [_c('h4', {
 	    staticClass: "search-label"
-	  }, [_vm._v("State")]), _vm._v(" "), _c('select', {
+	  }, [_vm._v("Type of Farm")]), _vm._v(" "), _c('select', {
 	    directives: [{
 	      name: "model",
 	      rawName: "v-model",
@@ -1183,7 +1217,8 @@ webpackJsonp([2,0],[
 	  }), _vm._v(" "), _c('v-cluster', _vm._l((_vm.markers), function(m, index) {
 	    return _c('v-marker', {
 	      attrs: {
-	        "lat-lng": m.position
+	        "lat-lng": m.position,
+	        "icon": m.theicon
 	      },
 	      on: {
 	        "l-click": function($event) {
@@ -1226,7 +1261,8 @@ webpackJsonp([2,0],[
 	  }), _vm._v(" "), _c('v-cluster', _vm._l((_vm.markers), function(m, index) {
 	    return _c('v-marker', {
 	      attrs: {
-	        "lat-lng": m.position
+	        "lat-lng": m.position,
+	        "icon": m.theicon
 	      },
 	      on: {
 	        "l-click": function($event) {
