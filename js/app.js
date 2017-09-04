@@ -129,7 +129,7 @@ webpackJsonp([2,0],[
 	  data: function data() {
 	    return {
 	      members: [],
-	      searchParams: { state: "", staylength: [], diet: [], textQuery: "", memberType: "host", farmMethod: "Any", skillsReq: [], page: 1, nearMe: false, distance: 50 },
+	      searchParams: { state: "", staylength: [], diet: [], textQuery: "", typeoffarm: "", memberType: "host", farmMethod: "Any", skillsReq: [], page: 1, nearMe: false, distance: 50 },
 	      center: { lat: -38, lng: 144 },
 	      markers: [],
 	      fullmembers: [],
@@ -252,6 +252,7 @@ webpackJsonp([2,0],[
 	        skillsreq: this.searchParams.skillsReq,
 	        diet: this.searchParams.diet,
 	        state: this.searchParams.state,
+	        farmtype: this.searchParams.typeoffarm,
 	        staylength: this.searchParams.staylength
 	      }).then(function (response) {
 	        if (Array.isArray(response.data)) {
@@ -885,7 +886,7 @@ webpackJsonp([2,0],[
 	      "min-height": "78px"
 	    }
 	  }, [_c('div', {
-	    staticClass: "col-sm-6 search-methods"
+	    staticClass: "col-sm-4 search-methods"
 	  }, [_c('h4', {
 	    staticClass: "search-label"
 	  }, [_vm._v("Farming Method")]), _vm._v(" "), _c('select', {
@@ -910,7 +911,7 @@ webpackJsonp([2,0],[
 	      "value": ""
 	    }
 	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Organic")]), _vm._v(" "), _c('option', [_vm._v("Permaculture")]), _vm._v(" "), _c('option', [_vm._v("Biodynamic")])])]), _vm._v(" "), _c('div', {
-	    staticClass: "col-sm-6 search-state"
+	    staticClass: "col-sm-4 search-state"
 	  }, [_c('h4', {
 	    staticClass: "search-label"
 	  }, [_vm._v("State")]), _vm._v(" "), _c('select', {
@@ -934,7 +935,32 @@ webpackJsonp([2,0],[
 	    attrs: {
 	      "value": ""
 	    }
-	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])])])]), _vm._v(" "), _c('div', {
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("ACT")]), _vm._v(" "), _c('option', [_vm._v("VIC")]), _vm._v(" "), _c('option', [_vm._v("QLD")]), _vm._v(" "), _c('option', [_vm._v("TAS")]), _vm._v(" "), _c('option', [_vm._v("WA")]), _vm._v(" "), _c('option', [_vm._v("NT")]), _vm._v(" "), _c('option', [_vm._v("SA")])])]), _vm._v(" "), _c('div', {
+	    staticClass: "col-sm-4 search-state"
+	  }, [_c('h4', {
+	    staticClass: "search-label"
+	  }, [_vm._v("State")]), _vm._v(" "), _c('select', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchParams.typeoffarm),
+	      expression: "searchParams.typeoffarm"
+	    }],
+	    on: {
+	      "change": [function($event) {
+	        _vm.searchParams.typeoffarm = Array.prototype.filter.call($event.target.options, function(o) {
+	          return o.selected
+	        }).map(function(o) {
+	          var val = "_value" in o ? o._value : o.value;
+	          return val
+	        })[0]
+	      }, _vm.filterMembers]
+	    }
+	  }, [_c('option', {
+	    attrs: {
+	      "value": ""
+	    }
+	  }, [_vm._v("Any")]), _vm._v(" "), _c('option', [_vm._v("Commercial Farm")]), _vm._v(" "), _c('option', [_vm._v("Hobby Farm")])])])])]), _vm._v(" "), _c('div', {
 	    staticClass: "form-group search-params"
 	  }, [_c('label', {
 	    directives: [{

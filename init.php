@@ -3,7 +3,7 @@
 Plugin Name: GW Members Page
 Plugin URI: /
 Description: Custom member search page
-Version: 1.3.1.1
+Version: 1.3.3
 Author: GippslandWeb
 Author URI: http://www.gippslandweb.com.au
 GitHub Plugin URI: Gippsland-Web/gw-member-list
@@ -99,6 +99,22 @@ function gwmp_get_members($request) {
 			if($includes == NULL)
 			return;
 	}
+
+if(strlen($request["farmtype"]) > 3){
+			if($includes == NULL)
+				$includes = my_custom_ids("Type of Farm",$request["farmtype"]);	
+				else {
+					$res = array();
+					foreach(my_custom_ids("Type of Farm",$request["farmtype"]) as $kv) {
+						if(in_array($kv,$includes))
+							array_push($res,$kv);
+					}
+					$includes = $res;
+				}
+			if($includes == NULL)
+			return;
+	}
+
 	if(count($request["skillsreq"]) > 0){
 			if($includes == NULL)
 				$includes = my_custom_ids("Skills required",$request['skillsreq']);	
@@ -271,10 +287,18 @@ function my_custom_ids( $field_name, $field_value = '' ) {
 		$query = "SELECT user_id FROM " . $wpdb->prefix . "bp_xprofile_data WHERE field_id = " . $field_id;
 	else
 		return 'Field not found';
+	$first = true;
 	if ( $field_value != '' ) {
 		if(is_array($field_value)){
 			foreach($field_value as $fv) {
-				$query .= " AND value LIKE '%" . $fv . "%'";
+				if($first == true){
+					$query .= " AND value LIKE '%" . $fv . "%'";
+					$first = false;
+				}
+				else{
+					$query .= " OR value LIKE '%" . $fv . "%'";
+					
+				}
 			}
 		}
 		else

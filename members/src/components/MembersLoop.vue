@@ -93,7 +93,7 @@
 
                         <div class="form-group form-inline ">
 							<div class="search-twocol" style="min-height:78px;">
-							<div class="col-sm-6 search-methods">
+							<div class="col-sm-4 search-methods">
 								<h4 class="search-label">Farming Method</h4>
 								<select v-model="searchParams.farmMethod" v-on:change="filterMembers">
 									<option value="">Any</option>
@@ -102,7 +102,7 @@
 									<option>Biodynamic</option>
 								</select>
 							</div>
-							<div class="col-sm-6 search-state">
+							<div class="col-sm-4 search-state">
 								<h4 class="search-label">State</h4>
 								<select v-model="searchParams.state" v-on:change="filterMembers">
 									<option value="">Any</option>
@@ -113,6 +113,15 @@
 									<option>WA</option>
 									<option>NT</option>
 									<option>SA</option>
+								</select>
+							</div>
+							<div class="col-sm-4 search-state">
+								<h4 class="search-label">State</h4>
+								<select v-model="searchParams.typeoffarm" v-on:change="filterMembers">
+									<option value="">Any</option>
+									<option>Commercial Farm</option>
+									<option>Hobby Farm</option>
+									
 								</select>
 							</div>
                             </div>
@@ -255,7 +264,7 @@ gmap-map {
     data: function () {
       return {
         members: [],
-        searchParams: {state:"",staylength: [], diet:[], textQuery: "", memberType: "host", farmMethod: "Any",skillsReq:[], page: 1,nearMe: false,distance: 50 },
+        searchParams: {state:"",staylength: [], diet:[], textQuery: "", typeoffarm:"", memberType: "host", farmMethod: "Any",skillsReq:[], page: 1,nearMe: false,distance: 50 },
         center: { lat: -38, lng: 144 },
         markers: [],
         fullmembers: [],
@@ -421,6 +430,7 @@ if(this.selectedID != -1) {
 			skillsreq: this.searchParams.skillsReq,
 			diet: this.searchParams.diet,
 			state: this.searchParams.state,
+			farmtype: this.searchParams.typeoffarm,
 			staylength: this.searchParams.staylength 
 		}).then(function (response) {
           //console.log(response);
